@@ -4,6 +4,7 @@ import (
 	"anshoryihsan/simple_rest/app"
 	"anshoryihsan/simple_rest/controller"
 	"anshoryihsan/simple_rest/helper"
+	"anshoryihsan/simple_rest/middleware"
 	"anshoryihsan/simple_rest/repository"
 	"anshoryihsan/simple_rest/service"
 	"net/http"
@@ -31,8 +32,9 @@ func main() {
 
 	server := http.Server{
 		Addr:    "localhost:4000",
-		Handler: router,
+		Handler: middleware.NewAuthMiddleware(router),
 	}
+	// Handler: router,
 
 	err := server.ListenAndServe()
 	helper.PanicIfError(err)
